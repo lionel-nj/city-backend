@@ -116,6 +116,7 @@ public class CityTest {
         .modificationDate("not a valid date")
         .build();
 
+
     assertThat(city.getModificationDate()).isNull();
   }
 
