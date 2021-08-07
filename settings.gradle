@@ -1,2 +1,6 @@
 rootProject.name = 'city-backend'
+include 'application'
+include 'service'
+include 'domain'
+include 'processor'
 
