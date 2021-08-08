@@ -41,7 +41,7 @@ jobs:
         env:
           versionTag: ${{ steps.prep.outputs.versionTag }}
         with:
-          arguments: testReport
+          arguments: test
 
   build_push:
     needs: test
