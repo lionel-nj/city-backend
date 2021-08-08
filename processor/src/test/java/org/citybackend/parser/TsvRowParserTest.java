@@ -15,7 +15,7 @@ public class TsvRowParserTest {
   @Test
   public void lineWithValues_isParsedAsCity() {
     String line = "3424953\tVirgin Rocks\tVirgin Rocks\tVirgin roches,Virgin gros cailloux\t46.42886\t-50.81995\tU\tRFU\tCA\t\t01\t02\t03\t04\t0\t4548\t-9999\t\t2018-02-20\n";
-    TsvRowParser parser = new TsvRowParser();
+    CityParser parser = TsvRowParser.getParser();
     City city = parser.parse(line);
     assertThat(city.getGeonameId()).matches("3424953");
     assertThat(city.getName()).matches("Virgin Rocks");
@@ -42,7 +42,7 @@ public class TsvRowParserTest {
   @Test
   public void lineWithoutValues_isParsedAsCity() {
     String line = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n";
-    TsvRowParser parser = new TsvRowParser();
+    CityParser parser = TsvRowParser.getParser();
     City city = parser.parse(line);
     assertThat(city.getGeonameId()).isEmpty();
     assertThat(city.getName()).isEmpty();
