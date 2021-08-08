@@ -346,7 +346,11 @@ public class City {
     }
 
     public Builder alternateNames(String alternateName) {
-      this.alternateNames = new HashSet<>(Arrays.asList(alternateName.split(COMMA_SEPARATOR)));
+      HashSet<String> names = new HashSet<>();
+      if (!alternateName.isEmpty()) {
+        names.addAll(Arrays.asList(alternateName.split(COMMA_SEPARATOR)));
+      }
+      this.alternateNames = names;
       return this;
     }
 
@@ -435,7 +439,8 @@ public class City {
 
     public Builder modificationDate(String modificationDate) {
       try {
-        this.modificationDate = LocalDate.parse(modificationDate.replace("\n", ""), DATE_TIME_FORMATTER);
+        this.modificationDate = LocalDate
+            .parse(modificationDate.replace("\n", ""), DATE_TIME_FORMATTER);
       } catch (DateTimeParseException e) {
         this.modificationDate = null;
       }
