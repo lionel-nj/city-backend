@@ -7,6 +7,29 @@ import org.citybackend.city.City;
  */
 public class TsvRowParser implements CityParser {
 
+  private static TsvRowParser entity = null;
+
+  private TsvRowParser() {
+  }
+
+  /**
+   * Returns the unique instance of {@code TsvRowParser}.
+   *
+   * @return the unique instance of {@code TsvRowParser}.
+   */
+  public static TsvRowParser getParser() {
+    if (entity == null) {
+      return new TsvRowParser();
+    }
+    return entity;
+  }
+
+  /**
+   * Return a {@code City} after parsing line from geonames.org.
+   *
+   * @param line the line to parse
+   * @return the {@code City} internat representation.
+   */
   @Override
   public City parse(String line) {
     // Because it's a tab separated file, split the line on the tab char.
