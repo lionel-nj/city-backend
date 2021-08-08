@@ -81,10 +81,8 @@ public abstract class CityInput implements Closeable {
   }
 
   /**
-   * Lists all files inside the City dataset, even if they are not CSV and do not have .txt
+   * Lists all files inside the City dataset, even if they are not TSV and do not have .txt
    * extension.
-   *
-   * <p>Directories and files in nested directories are skipped.
    *
    * @return base names of all available files
    */
@@ -93,8 +91,8 @@ public abstract class CityInput implements Closeable {
   /**
    * Returns a stream to read data from a given file.
    *
-   * @param filename relative path to the file, e.g, "stops.txt"
-   * @return an stream to read the file data
+   * @param filename relative path to the file, e.g, "LN.txt"
+   * @return a stream to read the file data
    * @throws IOException if no file could not be found at the specified location
    */
   public abstract InputStream getFile(String filename) throws IOException;

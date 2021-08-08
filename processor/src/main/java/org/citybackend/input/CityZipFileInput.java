@@ -8,11 +8,13 @@ import java.util.Enumeration;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipFile;
 
+/**
+ * Implements support for archived geonames directories.
+ */
 public class CityZipFileInput extends CityInput {
 
   private final ImmutableSet<String> filenames;
   private final ZipFile zipFile;
-  private String baseFileName;
 
   public CityZipFileInput(ZipFile zipFile) {
     this.zipFile = zipFile;
@@ -25,22 +27,28 @@ public class CityZipFileInput extends CityInput {
       String name = entry.getName();
       String curatedName = name.substring(name.indexOf("/") + 1).trim();
       filenamesBuilder.add(curatedName);
-      if (baseFileName == null) {
-        baseFileName = name.split("/")[0];
-      }
     }
     filenames = filenamesBuilder.build();
   }
 
-  private static boolean isInsideZipDirectory(ZipArchiveEntry entry) {
-    return entry.getName().contains("/");
-  }
-
+  /**
+   * Lists all files inside the City dataset, even if they are not TSV and do not have .txt
+   * extension.
+   *
+   * @return base names of all available files
+   */
   @Override
   public ImmutableSet<String> getFilenames() {
     return filenames;
   }
 
+  /**
+   * Returns a stream to read data from a given file.
+   *
+   * @param filename relative path to the file, e.g, "LN.txt"
+   * @return a stream to read the file data
+   * @throws IOException if no file could not be found at the specified location
+   */
   @Override
   public InputStream getFile(String filename) throws IOException {
     if (!filenames.contains(filename)) {

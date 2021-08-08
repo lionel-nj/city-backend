@@ -26,11 +26,24 @@ public class CityUnarchivedInput extends CityInput {
     }
   }
 
+  /**
+   * Lists all files inside the City dataset, even if they are not TSV and do not have .txt
+   * extension.
+   *
+   * @return base names of all available files
+   */
   @Override
   public ImmutableSet<String> getFilenames() {
     return filenames;
   }
 
+  /**
+   * Returns a stream to read data from a given file.
+   *
+   * @param filename relative path to the file, e.g, "LN.txt"
+   * @return a stream to read the file data
+   * @throws IOException if no file could not be found at the specified location
+   */
   @Override
   public InputStream getFile(String filename) throws IOException {
     return Files.newInputStream(directory.resolve(filename));

@@ -12,6 +12,9 @@ import org.citybackend.city.City;
 import org.citybackend.input.CityInput;
 import org.citybackend.parser.CityParser;
 
+/**
+ * In-memory implementation of {@code CityRepository}.
+ */
 public class InMemoryCityRepo implements CityRepository {
 
   private final HashMap<String, City> cities;
@@ -20,7 +23,17 @@ public class InMemoryCityRepo implements CityRepository {
     this.cities = cities;
   }
 
-  public static InMemoryCityRepo createFromUrls(CityParser parser, Map<String, URL> urlsByCountryCode)
+  /**
+   * Creates an instance of {@code InMemoryCityRepo} from {@code URL}s mapped by countrr code.
+   *
+   * @param parser            the parser to be used for deserialization
+   * @param urlsByCountryCode {@code URL}s to be used to download datasets
+   * @return an instance of {@code InMemoryCityRepo}
+   * @throws IOException        in case of error while reading/loading datasets
+   * @throws URISyntaxException if an {@code URL} is malformed.
+   */
+  public static InMemoryCityRepo createFromUrls(CityParser parser,
+      Map<String, URL> urlsByCountryCode)
       throws IOException, URISyntaxException {
     HashMap<String, City> citiesByGeonameId = new HashMap<>();
     for (String countryCode : urlsByCountryCode.keySet()) {
@@ -40,11 +53,22 @@ public class InMemoryCityRepo implements CityRepository {
     return new InMemoryCityRepo(citiesByGeonameId);
   }
 
+  /**
+   * Return the {@code City} whose geonameId matches the {@code String} passed as parameter.
+   *
+   * @param geonameId a {@code String} that represented a geonameId value
+   * @return the {@code City} whose geonameId matches the {@code String} passed as parameter
+   */
   @Override
   public City getByGeonameId(String geonameId) {
     return cities.get(geonameId);
   }
 
+  /**
+   * Returns all {@code City}s mapped by geonameId.
+   *
+   * @return all {@code City}s mapped by geonameId.
+   */
   @Override
   public HashMap<String, City> byGeonameIdMap() {
     return cities;
