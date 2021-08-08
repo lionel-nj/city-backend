@@ -242,6 +242,41 @@ public class City {
     return geonameId != null;
   }
 
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof City)) {
+      return false;
+    }
+    City otherCity = (City) other;
+    return otherCity.hashCode() == hashCode();
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(geonameId,
+        name,
+        asciiName,
+        alternateNames,
+        latitude,
+        longitude,
+        featureClass,
+        featureCode,
+        countryCode,
+        alternateCountryCode,
+        admin1,
+        admin2,
+        admin3,
+        admin4,
+        population,
+        elevation,
+        dem,
+        timeZone,
+        modificationDate);
+  }
+
   public static class Builder {
 
     private static final String COMMA_SEPARATOR = ",";
