@@ -39,6 +39,33 @@ public class CityTest {
   }
 
   @Test
+  public void emptyAlternateNames_isEmpty() {
+    City city = new City.Builder()
+        .geonameId("geoname id")
+        .name("name")
+        .asciiName("asciiName value")
+        .alternateNames("")
+        .latitude("45.90")
+        .longitude("53.33")
+        .featureClass("featureClass value")
+        .featureCode("featureCode value")
+        .countryCode("CA")
+        .alternateCountryCode("CA")
+        .admin1("admin1 value")
+        .admin2("admin2 value")
+        .admin3("admin3 value")
+        .admin4("admin4 value")
+        .population("5000000")
+        .elevation("300")
+        .dem("30000")
+        .timeZone("America/Toronto")
+        .modificationDate("2020-08-07")
+        .build();
+
+    assertThat(city.getAlternateNames()).isEmpty();
+  }
+
+  @Test
   public void invalidLatitude_isNull() {
     City city = new City.Builder()
         .geonameId("geoname id")
