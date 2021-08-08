@@ -13,7 +13,7 @@ import org.junit.runners.JUnit4;
 public class TsvRowParserTest {
 
   @Test
-  public void line_isParsedAsCity() {
+  public void lineWithValues_isParsedAsCity() {
     String line = "3424953\tVirgin Rocks\tVirgin Rocks\tVirgin roches,Virgin gros cailloux\t46.42886\t-50.81995\tU\tRFU\tCA\t\t01\t02\t03\t04\t0\t4548\t-9999\t\t2018-02-20\n";
     TsvRowParser parser = new TsvRowParser();
     City city = parser.parse(line);
@@ -37,5 +37,31 @@ public class TsvRowParserTest {
     assertThat(city.getDem()).isEqualTo(-9999);
     assertThat(city.getTimeZone()).isNull();
     assertThat(city.getModificationDate()).isEqualTo(LocalDate.of(2018, 02, 20));
+  }
+
+  @Test
+  public void lineWithoutValues_isParsedAsCity() {
+    String line = "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n";
+    TsvRowParser parser = new TsvRowParser();
+    City city = parser.parse(line);
+    assertThat(city.getGeonameId()).isEmpty();
+    assertThat(city.getName()).isEmpty();
+    assertThat(city.getAsciiName()).isEmpty();
+    assertThat(city.getAlternateNames().isEmpty());
+    assertThat(city.getLatitude()).isNull();
+    assertThat(city.getLongitude()).isNull();
+    assertThat(city.getFeatureClass()).isEmpty();
+    assertThat(city.getFeatureCode()).isEmpty();
+    assertThat(city.getCountryCode()).isEmpty();
+    assertThat(city.getAlternateCountryCode()).isEmpty();
+    assertThat(city.getAdmin1()).isEmpty();
+    assertThat(city.getAdmin2()).isEmpty();
+    assertThat(city.getAdmin3()).isEmpty();
+    assertThat(city.getAdmin4()).isEmpty();
+    assertThat(city.getPopulation()).isNull();
+    assertThat(city.getElevation()).isNull();
+    assertThat(city.getDem()).isNull();
+    assertThat(city.getTimeZone()).isNull();
+    assertThat(city.getModificationDate()).isNull();
   }
 }
