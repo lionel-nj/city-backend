@@ -1,10 +1,13 @@
-plugins {id 'org.springframework.boot' version '2.5.3'
+plugins {
+    id 'org.springframework.boot' version '2.5.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'application'
 }
 
 group 'org.citybackend'
-version '1.0-SNAPSHOT'
+version "${System.getenv("versionTag")}"
 
 repositories {
     mavenCentral()
@@ -14,3 +17,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+shadowJar {
+    // Change the JAR name from cli-app to city-backend
+    archiveBaseName = rootProject.name
+    // Remove "-all" from the end of the JAR file name
+    archiveClassifier = null
+    // Add "v" to version to match previous releases
+    archiveVersion = project.version
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+mainClassName = 'org.citybackend.application.Main'
