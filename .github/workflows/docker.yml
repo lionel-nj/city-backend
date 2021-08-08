@@ -112,6 +112,6 @@ jobs:
           push: true
           tags: ${{ steps.prep.outputs.tags }}
           labels: |
-            org.opencontainers.image.source=${{ github.event.repository.clone_url }}
+            org.opencontainers.image.source=https://github.com/lionel-nj/city-backend.git
             org.opencontainers.image.created=${{ steps.prep.outputs.created }}
             org.opencontainers.image.revision=${{ github.sha }}
