@@ -39,7 +39,7 @@ public class CityTest {
   }
 
   @Test
-  public void invalidLatitude_replacedByNull() {
+  public void invalidLatitude_isNull() {
     City city = new City.Builder()
         .geonameId("geoname id")
         .name("name")
@@ -66,7 +66,7 @@ public class CityTest {
   }
 
   @Test
-  public void invalidLongitude_replacedByNull() {
+  public void invalidLongitude_isNull() {
     City city = new City.Builder()
         .geonameId("geoname id")
         .name("name")
@@ -93,7 +93,7 @@ public class CityTest {
   }
 
   @Test
-  public void invalidDate_replacedByDateOfNow() {
+  public void invalidDate_isNull() {
     City city = new City.Builder()
         .geonameId("geoname id")
         .name("name")
@@ -120,7 +120,7 @@ public class CityTest {
   }
 
   @Test
-  public void invalidTimeZone_replacedByNull() {
+  public void invalidTimeZone_isNull() {
     City city = new City.Builder()
         .geonameId("geoname id")
         .name("name")
@@ -144,5 +144,36 @@ public class CityTest {
         .build();
 
     assertThat(city.getTimeZone()).isNull();
+  }
+
+  @Test
+  public void emptyNumber_isNull() {
+    City city = new City.Builder()
+        .geonameId("geoname id")
+        .name("name")
+        .asciiName("asciiName value")
+        .alternateNames("alternateName0,alternateName1")
+        .latitude("")
+        .longitude("")
+        .featureClass("featureClass value")
+        .featureCode("featureCode value")
+        .countryCode("CA")
+        .alternateCountryCode("CA")
+        .admin1("admin1 value")
+        .admin2("admin2 value")
+        .admin3("admin3 value")
+        .admin4("admin4 value")
+        .population("")
+        .elevation("")
+        .dem("")
+        .timeZone("America/Montreal")
+        .modificationDate("2020-08-07")
+        .build();
+
+    assertThat(city.getLongitude()).isNull();
+    assertThat(city.getLatitude()).isNull();
+    assertThat(city.getPopulation()).isNull();
+    assertThat(city.getElevation()).isNull();
+    assertThat(city.getDem()).isNull();
   }
 }
