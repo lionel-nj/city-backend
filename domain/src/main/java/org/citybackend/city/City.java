@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -356,9 +357,13 @@ public class City {
 
     public Builder latitude(String latitude) {
       if (!latitude.isEmpty()) {
-        Double lat = Double.valueOf(latitude);
-        if (LAT_MIN <= lat && lat <= LAT_MAX) {
-          this.latitude = lat;
+        try {
+          Double lat = Double.valueOf(latitude);
+          if (LAT_MIN <= lat && lat <= LAT_MAX) {
+            this.latitude = lat;
+          }
+        } catch (NumberFormatException e) {
+          return this;
         }
       }
       return this;
@@ -366,9 +371,13 @@ public class City {
 
     public Builder longitude(String longitude) {
       if (!longitude.isEmpty()) {
-        Double lng = Double.valueOf(longitude);
-        if (LNG_MIN <= lng && lng <= LNG_MAX) {
-          this.longitude = lng;
+        try {
+          Double lng = Double.valueOf(longitude);
+          if (LNG_MIN <= lng && lng <= LNG_MAX) {
+            this.longitude = lng;
+          }
+        } catch (NumberFormatException e) {
+          return this;
         }
       }
       return this;
@@ -416,14 +425,22 @@ public class City {
 
     public Builder elevation(String elevation) {
       if (!elevation.isEmpty()) {
-        this.elevation = Integer.valueOf(elevation);
+        try {
+          this.elevation = Integer.valueOf(elevation);
+        } catch (NumberFormatException e) {
+          return this;
+        }
       }
       return this;
     }
 
     public Builder dem(String dem) {
       if (!dem.isEmpty()) {
-        this.dem = Integer.valueOf(dem);
+        try {
+          this.dem = Integer.valueOf(dem);
+        } catch (NumberFormatException e) {
+          return this;
+        }
       }
       return this;
     }
@@ -449,7 +466,11 @@ public class City {
 
     public Builder population(String population) {
       if (!population.isEmpty()) {
-        this.population = Long.valueOf(population);
+        try {
+          this.population = Long.valueOf(population);
+        } catch (NumberFormatException e) {
+          return this;
+        }
       }
       return this;
     }
