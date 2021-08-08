@@ -11,5 +11,9 @@ repositories {
 
 dependencies {
     implementation project(':domain')
+    implementation 'com.google.guava:guava:29.0-jre'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.2'
+    implementation 'org.apache.commons:commons-compress:1.20'
     testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation group: 'junit', name: 'junit', version: '4.13'
 }
