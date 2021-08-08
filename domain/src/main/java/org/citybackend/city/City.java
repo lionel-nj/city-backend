@@ -6,7 +6,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
@@ -352,17 +351,21 @@ public class City {
     }
 
     public Builder latitude(String latitude) {
-      Double lat = Double.valueOf(latitude);
-      if (LAT_MIN <= lat && lat <= LAT_MAX) {
-        this.latitude = lat;
+      if (!latitude.isEmpty()) {
+        Double lat = Double.valueOf(latitude);
+        if (LAT_MIN <= lat && lat <= LAT_MAX) {
+          this.latitude = lat;
+        }
       }
       return this;
     }
 
     public Builder longitude(String longitude) {
-      Double lng = Double.valueOf(longitude);
-      if (LNG_MIN <= lng && lng <= LNG_MAX) {
-        this.longitude = lng;
+      if (!longitude.isEmpty()) {
+        Double lng = Double.valueOf(longitude);
+        if (LNG_MIN <= lng && lng <= LNG_MAX) {
+          this.longitude = lng;
+        }
       }
       return this;
     }
@@ -408,12 +411,16 @@ public class City {
     }
 
     public Builder elevation(String elevation) {
-      this.elevation = Integer.valueOf(elevation);
+      if (!elevation.isEmpty()) {
+        this.elevation = Integer.valueOf(elevation);
+      }
       return this;
     }
 
     public Builder dem(String dem) {
-      this.dem = Integer.valueOf(dem);
+      if (!dem.isEmpty()) {
+        this.dem = Integer.valueOf(dem);
+      }
       return this;
     }
 
@@ -428,7 +435,7 @@ public class City {
 
     public Builder modificationDate(String modificationDate) {
       try {
-        this.modificationDate = LocalDate.parse(modificationDate, DATE_TIME_FORMATTER);
+        this.modificationDate = LocalDate.parse(modificationDate.replace("\n", ""), DATE_TIME_FORMATTER);
       } catch (DateTimeParseException e) {
         this.modificationDate = null;
       }
@@ -436,7 +443,9 @@ public class City {
     }
 
     public Builder population(String population) {
-      this.population = Long.valueOf(population);
+      if (!population.isEmpty()) {
+        this.population = Long.valueOf(population);
+      }
       return this;
     }
 
