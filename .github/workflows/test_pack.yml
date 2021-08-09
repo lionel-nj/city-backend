@@ -63,8 +63,8 @@ jobs:
         env:
           versionTag: ${{ steps.prep.outputs.versionTag }}
         with:
-          arguments: shadowJar
-      - name: Persist cli app jar
+          arguments: jar
+      - name: Persist app jar
         uses: actions/upload-artifact@v2
         with:
           name: city-backend-api.jar -- ${{ steps.prep.outputs.versionTag }}
