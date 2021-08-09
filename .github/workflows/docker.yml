@@ -95,7 +95,7 @@ jobs:
         env:
           versionTag: ${{ steps.prep.outputs.gradleVersionTag }}
         with:
-          arguments: shadowJar
+          arguments: build
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to GitHub Container Registry
