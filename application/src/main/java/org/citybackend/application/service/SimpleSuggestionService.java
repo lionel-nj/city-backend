@@ -32,7 +32,7 @@ public class SimpleSuggestionService implements SuggestionService {
   private static final Gson DEFAULT_GSON =
       new GsonBuilder().serializeNulls().serializeSpecialFloatingPointValues().setPrettyPrinting()
           .create();
-  private static final int PER_PAGE = 10;
+  private static final int perPage = 10;
 
   static double jaroWinklerSimilarity(String cityName, String q) {
     return similarityCalculator.apply(cityName, q);
@@ -58,12 +58,12 @@ public class SimpleSuggestionService implements SuggestionService {
 
   private static ArrayList<Suggestion> paginate(ArrayList<Suggestion> suggestions, int page) {
     int totalPages =
-        suggestions.size() % PER_PAGE == 0 ? suggestions.size() / PER_PAGE
-            : (suggestions.size() / PER_PAGE) + 1;
+        suggestions.size() % perPage == 0 ? suggestions.size() / perPage
+            : (suggestions.size() / perPage) + 1;
     ArrayList<Suggestion> toReturn = new ArrayList<>();
     if (page < totalPages) {
-      toReturn.addAll(suggestions.subList((page * PER_PAGE),
-          Math.min((page * PER_PAGE + PER_PAGE), suggestions.size())));
+      toReturn.addAll(suggestions.subList((page * perPage),
+          Math.min((page * perPage + perPage), suggestions.size())));
     }
     return toReturn;
   }
@@ -82,7 +82,7 @@ public class SimpleSuggestionService implements SuggestionService {
    */
   @Override
   public String rankCities(CityRepository cities, String q, Double latitude, Double longitude,
-      Integer page, String... countryCodes) {
+      int page,int perPage, String... countryCodes) {
     List<City> closeCities = cities.forCountryCodes(countryCodes).stream()
         .filter(isClose(latitude, longitude))
         .collect(Collectors.toUnmodifiableList());
@@ -100,8 +100,9 @@ public class SimpleSuggestionService implements SuggestionService {
       suggestionElement.addProperty("score", suggestion.getScore());
     }
     root.addProperty("page", page);
-    root.addProperty("total_pages", suggestions.size() % PER_PAGE == 0 ? suggestions.size() / PER_PAGE
-        : (suggestions.size() / PER_PAGE) + 1);
+    root.addProperty("per_page", perPage);
+    root.addProperty("total_pages", suggestions.size() % perPage == 0 ? suggestions.size() / perPage
+        : (suggestions.size() / perPage) + 1);
     return DEFAULT_GSON.toJson(root);
   }
 
