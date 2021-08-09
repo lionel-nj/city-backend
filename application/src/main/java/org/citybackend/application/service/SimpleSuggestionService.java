@@ -48,10 +48,11 @@ public class SimpleSuggestionService implements SuggestionService {
    * @param longitude the user's longitude
    * @return {@code Predicate<City>} to filter cities based on their location.
    */
-  public static Predicate<City> isClose(double latitude, double longitude) {
-    return city -> city.hasLatitude() && city.hasLongitude()
+  public static Predicate<City> isClose(Double latitude, Double longitude) {
+    return city -> (latitude == null || longitude == null) || (city.hasLatitude() && city
+        .hasLongitude()
         && Math.abs(city.getLatitude() - latitude) < 10
-        && Math.abs(city.getLongitude() - longitude) < 20;
+        && Math.abs(city.getLongitude() - longitude) < 20);
   }
 
   /**
