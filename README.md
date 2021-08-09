@@ -19,6 +19,8 @@ confidence in the suggestion (1 is most confident)
   - Each suggestion has a name which can be used to disambiguate between
 similarly named locations
   - Each suggestion has a latitude and longitude
+   
+  **⚠️ Note - cities that are more than 1111km away from the users are not taken into account if user provides the coordinates of his location.**
 
 ## ⚙️ How to start the service
 
