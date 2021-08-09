@@ -5,6 +5,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -17,6 +19,9 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class SimpleSuggestionServiceTest {
 
+  private static final Gson DEFAULT_GSON =
+      new GsonBuilder().serializeNulls().serializeSpecialFloatingPointValues().setPrettyPrinting()
+          .create();
   private final static double LATITUDE = 50.0;
   private final static double LONGITUDE = 55.4;
   private final static Predicate<City> predicate = SimpleSuggestionService
@@ -113,26 +118,28 @@ public class SimpleSuggestionServiceTest {
     when(cityRepo.forCountryCodes("CA")).thenReturn(canadianCities);
 
     SimpleSuggestionService service = new SimpleSuggestionService();
-    assertThat(service.rankCities(cityRepo, "tor", LATITUDE, LONGITUDE, 0, 10, "CA")).isEqualTo(
-        "{\n"
-            + "  \"suggestions\": [\n"
-            + "    {\n"
-            + "      \"name\": \"toronto\",\n"
-            + "      \"latitude\": 42.0,\n"
-            + "      \"longitude\": 54.6,\n"
-            + "      \"score\": 0.8666666666666668\n"
-            + "    },\n"
-            + "    {\n"
-            + "      \"name\": \"montreal\",\n"
-            + "      \"latitude\": 55.0,\n"
-            + "      \"longitude\": 50.0,\n"
-            + "      \"score\": 0.6805555555555555\n"
-            + "    }\n"
-            + "  ],\n"
-            + "  \"page\": 0,\n"
-            + "  \"per_page\": 10,\n"
-            + "  \"total_pages\": 1\n"
-            + "}"
-    );
+    assertThat(
+        DEFAULT_GSON.toJson(service.rankCities(cityRepo, "tor", LATITUDE, LONGITUDE, 0, 10, "CA")))
+        .isEqualTo(
+            "{\n"
+                + "  \"suggestions\": [\n"
+                + "    {\n"
+                + "      \"name\": \"toronto\",\n"
+                + "      \"latitude\": 42.0,\n"
+                + "      \"longitude\": 54.6,\n"
+                + "      \"score\": 0.8666666666666668\n"
+                + "    },\n"
+                + "    {\n"
+                + "      \"name\": \"montreal\",\n"
+                + "      \"latitude\": 55.0,\n"
+                + "      \"longitude\": 50.0,\n"
+                + "      \"score\": 0.6805555555555555\n"
+                + "    }\n"
+                + "  ],\n"
+                + "  \"page\": 0,\n"
+                + "  \"per_page\": 10,\n"
+                + "  \"total_pages\": 1\n"
+                + "}"
+        );
   }
 }

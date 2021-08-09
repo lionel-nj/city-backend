@@ -1,7 +1,5 @@
 package org.citybackend.application.service;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.util.ArrayList;
@@ -28,10 +26,6 @@ public class SimpleSuggestionService implements SuggestionService {
    * </p>
    */
   private static final JaroWinklerSimilarity similarityCalculator = new JaroWinklerSimilarity();
-
-  private static final Gson DEFAULT_GSON =
-      new GsonBuilder().serializeNulls().serializeSpecialFloatingPointValues().setPrettyPrinting()
-          .create();
   private static final int perPage = 10;
   private static final int MAX_LAT = 10;
   private static final int MAX_LON = 10;
@@ -82,10 +76,11 @@ public class SimpleSuggestionService implements SuggestionService {
    * @param page         the page
    * @param perPage      the number of items per page
    * @param countryCodes the country codes of the desired cities
-   * @return a json string that represents a list of {code Suggestion}s ranked by
+   * @return a {@code JsonObject} that represents a list of {code Suggestion}s ranked by similarity
+   * of there name.
    */
   @Override
-  public String rankCities(CityRepository cities, String q, Double latitude, Double longitude,
+  public JsonObject rankCities(CityRepository cities, String q, Double latitude, Double longitude,
       int page, int perPage, String... countryCodes) {
     List<City> closeCities = cities.forCountryCodes(countryCodes).stream()
         .filter(isClose(latitude, longitude))
@@ -107,7 +102,7 @@ public class SimpleSuggestionService implements SuggestionService {
     root.addProperty("per_page", perPage);
     root.addProperty("total_pages", suggestions.size() % perPage == 0 ? suggestions.size() / perPage
         : (suggestions.size() / perPage) + 1);
-    return DEFAULT_GSON.toJson(root);
+    return root;
   }
 
   /**

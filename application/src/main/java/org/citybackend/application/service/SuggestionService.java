@@ -1,5 +1,6 @@
 package org.citybackend.application.service;
 
+import com.google.gson.JsonObject;
 import org.citybackend.repo.CityRepository;
 
 /**
@@ -7,6 +8,6 @@ import org.citybackend.repo.CityRepository;
  */
 public interface SuggestionService {
 
-  String rankCities(CityRepository cities, String q, Double latitude, Double longitude,
+  JsonObject rankCities(CityRepository cities, String q, Double latitude, Double longitude,
       int page, int perPage, String... countryCodes);
 }
