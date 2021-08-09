@@ -8,5 +8,5 @@ import org.citybackend.repo.CityRepository;
 public interface SuggestionService {
 
   String rankCities(CityRepository cities, String q, Double latitude, Double longitude,
-      String... countryCodes);
+      Integer page, String... countryCodes);
 }
