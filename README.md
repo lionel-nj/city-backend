@@ -22,6 +22,18 @@ similarly named locations
    
   **⚠️ Note - cities that are more than 1111km away from the users are not taken into account if user provides the coordinates of his location.**
 
+## Architecture
+
+The project is divided into 3 submodules:
+1. `application`
+The point of entry of the application and the business logic.
+
+2. `domain`
+ Used to internally represent a city (= a row from [CA.txt](https://download.geonames.org/export/dump/CA.zip) here).
+
+3. `processor`
+Responsible for data extraction (from geonames), and data storage.
+
 ## ⚙️ How to start the service
 
 ### Using a local `.jar` file
