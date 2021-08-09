@@ -69,3 +69,8 @@ jobs:
         with:
           name: city-backend-api.jar -- ${{ steps.prep.outputs.versionTag }}
           path: application/build/libs/application-${{ steps.prep.outputs.versionTag }}.jar
+      - name: Explore path
+        run: |
+          pwd
+          cd application/build/libs
+          ls -a
