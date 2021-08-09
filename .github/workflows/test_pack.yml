@@ -68,4 +68,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: city-backend-api.jar -- ${{ steps.prep.outputs.versionTag }}
-          path: application/build/libs/city-backend-${{ steps.prep.outputs.versionTag }}.jar
+          path: application/build/libs/application-${{ steps.prep.outputs.versionTag }}.jar
