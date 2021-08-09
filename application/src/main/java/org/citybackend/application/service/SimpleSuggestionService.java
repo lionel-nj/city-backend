@@ -104,6 +104,6 @@ public class SimpleSuggestionService implements SuggestionService {
           jaroWinklerSimilarity(city.getName(), q)));
     }
     suggestions.sort(Collections.reverseOrder());
-    return suggestions;
+    return (ArrayList<Suggestion>) suggestions.stream().limit(20).collect(Collectors.toList());
   }
 }
