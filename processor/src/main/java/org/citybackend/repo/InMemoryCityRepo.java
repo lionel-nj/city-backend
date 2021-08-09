@@ -1,26 +1,37 @@
 package org.citybackend.repo;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.citybackend.city.City;
 import org.citybackend.input.CityInput;
 import org.citybackend.parser.CityParser;
+import org.springframework.stereotype.Repository;
 
 /**
  * In-memory implementation of {@code CityRepository}.
  */
+@Repository
 public class InMemoryCityRepo implements CityRepository {
 
   private final HashMap<String, City> cities;
+  private final ListMultimap<String, City> byCountryCodeMap = ArrayListMultimap.create();
 
   private InMemoryCityRepo(HashMap<String, City> cities) {
     this.cities = cities;
+    for (String geonameId : cities.keySet()) {
+      byCountryCodeMap.put(cities.get(geonameId).getCountryCode(), cities.get(geonameId));
+    }
   }
 
   /**
@@ -72,5 +83,19 @@ public class InMemoryCityRepo implements CityRepository {
   @Override
   public HashMap<String, City> byGeonameIdMap() {
     return cities;
+  }
+
+  @Override
+  public ListMultimap<String, City> byCountryCodeMap() {
+    return byCountryCodeMap;
+  }
+
+  @Override
+  public List<City> forCountryCodes(String... countryCodes) {
+    List<City> toReturn = new ArrayList<>();
+    for (String countryCode : countryCodes) {
+      toReturn.addAll(byCountryCodeMap.get(countryCode));
+    }
+    return Collections.unmodifiableList(toReturn);
   }
 }

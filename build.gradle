@@ -1,14 +1,11 @@
-plugins {
-    id 'java'
+// so we can aggregate all Javadocs in one
+// see: https://github.com/nebula-plugins/gradle-aggregate-javadocs-plugin
+buildscript {
+    repositories { jcenter() }
+
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-aggregate-javadocs-plugin:3.0.1'
+    }
 }
 
-group 'org.citybackend'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
+apply plugin: 'nebula-aggregate-javadocs'
