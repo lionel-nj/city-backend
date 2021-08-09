@@ -113,7 +113,8 @@ public class SimpleSuggestionServiceTest {
     when(cityRepo.forCountryCodes("CA")).thenReturn(canadianCities);
 
     SimpleSuggestionService service = new SimpleSuggestionService();
-    assertThat(service.rankCities(cityRepo, "tor", LATITUDE, LONGITUDE, "CA")).isEqualTo(
+    String test = (service.rankCities(cityRepo, "tor", LATITUDE, LONGITUDE, 0,"CA"));
+    assertThat(service.rankCities(cityRepo, "tor", LATITUDE, LONGITUDE, 0,"CA")).isEqualTo(
         "{\n"
             + "  \"suggestions\": [\n"
             + "    {\n"
@@ -128,7 +129,9 @@ public class SimpleSuggestionServiceTest {
             + "      \"longitude\": 50.0,\n"
             + "      \"score\": 0.6805555555555555\n"
             + "    }\n"
-            + "  ]\n"
+            + "  ],\n"
+            + "  \"page\": 0,\n"
+            + "  \"total_pages\": 1\n"
             + "}"
     );
   }

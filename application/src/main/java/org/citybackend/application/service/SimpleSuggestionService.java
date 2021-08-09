@@ -32,6 +32,7 @@ public class SimpleSuggestionService implements SuggestionService {
   private static final Gson DEFAULT_GSON =
       new GsonBuilder().serializeNulls().serializeSpecialFloatingPointValues().setPrettyPrinting()
           .create();
+  private static final int PER_PAGE = 10;
 
   static double jaroWinklerSimilarity(String cityName, String q) {
     return similarityCalculator.apply(cityName, q);
@@ -55,6 +56,18 @@ public class SimpleSuggestionService implements SuggestionService {
         && Math.abs(city.getLongitude() - longitude) < 20);
   }
 
+  private static ArrayList<Suggestion> paginate(ArrayList<Suggestion> suggestions, int page) {
+    int totalPages =
+        suggestions.size() % PER_PAGE == 0 ? suggestions.size() / PER_PAGE
+            : (suggestions.size() / PER_PAGE) + 1;
+    ArrayList<Suggestion> toReturn = new ArrayList<>();
+    if (page < totalPages) {
+      toReturn.addAll(suggestions.subList((page * PER_PAGE),
+          Math.min((page * PER_PAGE + PER_PAGE), suggestions.size())));
+    }
+    return toReturn;
+  }
+
   /**
    * Ranks cities based on the percentage of similarity of their name with the query parameter.
    * {@code City}s that are "too far" from the user are not taken into account. Also, only cities
@@ -69,16 +82,16 @@ public class SimpleSuggestionService implements SuggestionService {
    */
   @Override
   public String rankCities(CityRepository cities, String q, Double latitude, Double longitude,
-      String... countryCodes) {
+      Integer page, String... countryCodes) {
     List<City> closeCities = cities.forCountryCodes(countryCodes).stream()
         .filter(isClose(latitude, longitude))
         .collect(Collectors.toUnmodifiableList());
-    List<Suggestion> suggestions = sortCitiesByNameSimilarity(closeCities, q);
+    ArrayList<Suggestion> suggestions = sortCitiesByNameSimilarity(closeCities, q);
 
     JsonObject root = new JsonObject();
     JsonArray jsonSuggestions = new JsonArray();
     root.add("suggestions", jsonSuggestions);
-    for (Suggestion suggestion : suggestions) {
+    for (Suggestion suggestion : paginate(suggestions, page)) {
       JsonObject suggestionElement = new JsonObject();
       jsonSuggestions.add(suggestionElement);
       suggestionElement.addProperty("name", suggestion.getCityName());
@@ -86,6 +99,9 @@ public class SimpleSuggestionService implements SuggestionService {
       suggestionElement.addProperty("longitude", suggestion.getLongitude());
       suggestionElement.addProperty("score", suggestion.getScore());
     }
+    root.addProperty("page", page);
+    root.addProperty("total_pages", suggestions.size() % PER_PAGE == 0 ? suggestions.size() / PER_PAGE
+        : (suggestions.size() / PER_PAGE) + 1);
     return DEFAULT_GSON.toJson(root);
   }
 
@@ -104,6 +120,6 @@ public class SimpleSuggestionService implements SuggestionService {
           jaroWinklerSimilarity(city.getName(), q)));
     }
     suggestions.sort(Collections.reverseOrder());
-    return (ArrayList<Suggestion>) suggestions.stream().limit(20).collect(Collectors.toList());
+    return suggestions;
   }
 }
