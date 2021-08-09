@@ -77,12 +77,14 @@ public class SimpleSuggestionService implements SuggestionService {
    * @param q            the query parameter
    * @param latitude     the user's latitude
    * @param longitude    the user's latitude
+   * @param page         the page
+   * @param perPage      the number of items per page
    * @param countryCodes the country codes of the desired cities
    * @return a json string that represents a list of {code Suggestion}s ranked by
    */
   @Override
   public String rankCities(CityRepository cities, String q, Double latitude, Double longitude,
-      int page,int perPage, String... countryCodes) {
+      int page, int perPage, String... countryCodes) {
     List<City> closeCities = cities.forCountryCodes(countryCodes).stream()
         .filter(isClose(latitude, longitude))
         .collect(Collectors.toUnmodifiableList());
