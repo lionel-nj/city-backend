@@ -58,14 +58,19 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
-      - name: Package cli app jar with Gradle
+      - name: Package appplication jar with Gradle
         uses: eskatos/gradle-command-action@v1
         env:
           versionTag: ${{ steps.prep.outputs.versionTag }}
         with:
-          arguments: shadowJar
-      - name: Persist cli app jar
+          arguments: build
+      - name: Persist application jar
         uses: actions/upload-artifact@v2
         with:
           name: city-backend-api.jar -- ${{ steps.prep.outputs.versionTag }}
-          path: application/build/libs/city-backend-${{ steps.prep.outputs.versionTag }}.jar
+          path: application/build/libs/application-${{ steps.prep.outputs.versionTag }}.jar
+      - name: Explore path
+        run: |
+          pwd
+          cd application/build/libs
+          ls -a

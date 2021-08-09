@@ -14,17 +14,18 @@ repositories {
 }
 
 dependencies {
+    implementation project(':domain')
+    implementation project(':processor')
+    implementation 'org.apache.commons:commons-text:1.9'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.google.guava:guava:29.0-jre'
     implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-shadowJar {
-    // Change the JAR name from cli-app to city-backend
-    archiveBaseName = rootProject.name
-    // Remove "-all" from the end of the JAR file name
-    archiveClassifier = null
-    // Add "v" to version to match previous releases
-    archiveVersion = project.version
+    testImplementation "com.google.truth:truth:1.0.1"
+    testImplementation 'org.hamcrest:hamcrest:2.2'
+    testImplementation 'org.mockito:mockito-core:3.3.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
