@@ -1,3 +1,5 @@
+[![Unit tests and packaging](https://github.com/lionel-nj/city-backend/actions/workflows/test_pack.yml/badge.svg?event=release)](https://github.com/lionel-nj/city-backend/actions/workflows/test_pack.yml)
+
 # Canadian city backend autocompletion API
 
 ## 🎉 Features
