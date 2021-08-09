@@ -37,10 +37,5 @@ shadowJar {
     archiveVersion = project.version
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-mainClassName = 'org.mobilitydata.gtfsvalidator.cli.Main'
-compileJava.options.encoding = "UTF-8"
-
-
 sourceCompatibility = JavaVersion.VERSION_11
 mainClassName = 'org.citybackend.application.Main'
