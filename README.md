@@ -23,10 +23,10 @@ similarly named locations
 ## ⚙️ How to start the service
 
 ### Using a local `.jar` file
-1. Download the application's `jar` file at [add link to jar]()
+1. Download the latest application's `jar` file at [available here](https://github.com/MobilityData/gtfs-validator/releases)
 1. Run the following command line:
 ```
-java -jar city-backend-v1.0.jar
+java -jar city-backend-v1.0.0jar
 ```
 
 ### Using a Docker image
