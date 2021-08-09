@@ -33,6 +33,8 @@ public class SimpleSuggestionService implements SuggestionService {
       new GsonBuilder().serializeNulls().serializeSpecialFloatingPointValues().setPrettyPrinting()
           .create();
   private static final int perPage = 10;
+  private static final int MAX_LAT = 10;
+  private static final int MAX_LON = 10;
 
   static double jaroWinklerSimilarity(String cityName, String q) {
     return similarityCalculator.apply(cityName, q);
@@ -52,8 +54,8 @@ public class SimpleSuggestionService implements SuggestionService {
   public static Predicate<City> isClose(Double latitude, Double longitude) {
     return city -> (latitude == null || longitude == null) || (city.hasLatitude() && city
         .hasLongitude()
-        && Math.abs(city.getLatitude() - latitude) < 10
-        && Math.abs(city.getLongitude() - longitude) < 20);
+        && Math.abs(city.getLatitude() - latitude) < MAX_LAT
+        && Math.abs(city.getLongitude() - longitude) < MAX_LON);
   }
 
   private static ArrayList<Suggestion> paginate(ArrayList<Suggestion> suggestions, int page) {
