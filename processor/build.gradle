@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.5.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group 'org.citybackend'
@@ -14,6 +16,9 @@ dependencies {
     implementation 'com.google.guava:guava:29.0-jre'
     implementation 'org.apache.httpcomponents:httpclient:4.5.2'
     implementation 'org.apache.commons:commons-compress:1.20'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "com.google.truth:truth:1.0.1"
     testImplementation group: 'junit', name: 'junit', version: '4.13'
 }
