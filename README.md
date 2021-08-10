@@ -35,10 +35,10 @@ Responsible for data extraction (from geonames), and data storage.
 ## ⚙️ How to start the service
 
 ### Using a local `.jar` file
-1. Download the latest application's `jar` file at [available here](https://github.com/MobilityData/gtfs-validator/releases)
+1. Download the latest application's `jar` file [available here](https://github.com/lionel-nj/city-backend/releases)
 1. Run the following command line:
 ```
-java -jar city-backend-v1.0.0jar
+java -jar city-backend-v1.0.0.jar
 ```
 
 ### Using a Docker image
